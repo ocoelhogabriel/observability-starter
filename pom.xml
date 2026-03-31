@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>4.0.4</version>
+    <relativePath/>
+  </parent>
+
+  <groupId>br.com.ocoelhogabriel</groupId>
+  <artifactId>ocoelhogabriel-observability-spring-boot-starter</artifactId>
+  <version>1.0.0</version>
+  <packaging>jar</packaging>
+
+  <name>Ocoelhogabriel Observability Starter</name>
+  <description>
+    Production-grade observability library for Ocoelhogabriel microservices.
+    Provides structured logging with fluent API, correlation context propagation,
+    automatic performance instrumentation, sensitive data masking, smart log sampling,
+    audit trail, and Micrometer metrics integration.
+  </description>
+
+  <properties>
+    <java.version>21</java.version>
+    <logstash-logback.version>8.0</logstash-logback.version>
+  </properties>
+
+  <dependencies>
+
+    <!-- ── Spring Boot (provided — o consumidor já traz) ──────────── -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-health</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-aspectj</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- ── Logging ────────────────────────────────────────────────── -->
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.logstash.logback</groupId>
+      <artifactId>logstash-logback-encoder</artifactId>
+      <version>${logstash-logback.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- ── Micrometer (provided) ──────────────────────────────────── -->
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-core</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- ── Jakarta Servlet (provided) ─────────────────────────────── -->
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- ── Auto-configuration processor ───────────────────────────── -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-autoconfigure-processor</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <!-- ── Test ────────────────────────────────────────────────────── -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <release>21</release>
+        </configuration>
+      </plugin>
+      <!-- NÃO usar spring-boot-maven-plugin aqui — é uma lib, não um app executável -->
+    </plugins>
+  </build>
+
+</project>

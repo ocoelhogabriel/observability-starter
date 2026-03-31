@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Ocoelhogabriel Observability — Logback Defaults
+  =========================================
+  Inclua este arquivo no seu logback-spring.xml:
+    <include resource="logback-defaults-ocoelhogabriel.xml"/>
+
+  Ele fornece:
+  - Conversion rule para masking automático (%mask)
+  - Pattern padrão para DEV (colorido, com traceId/spanId/scope)
+  - Pattern padrão para PROD (compacto, sem cores)
+  - Appender CONSOLE pré-configurado
+-->
+<included>
+
+  <!-- Registra os conversores Spring Boot: %clr (cores ANSI) e %wEx (stack trace) -->
+  <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+  <!-- Registra o converter de masking -->
+  <conversionRule conversionWord="mask"
+    converterClass="br.com.ocoelhogabriel.observability.masking.MaskingMessageConverter"/>
+
+  <!-- Propriedades injetadas do Spring -->
+  <springProperty scope="context" name="appName"
+    source="spring.application.name" defaultValue="app"/>
+  <springProperty scope="context" name="activeProfile"
+    source="spring.profiles.active" defaultValue="default"/>
+
+  <!-- ── Pattern DEV (colorido com contexto completo) ──────────────── -->
+  <property name="OCOELHOGABRIEL_DEV_PATTERN"
+    value="%clr(%d{HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr([${appName:-},%X{traceId:-},%X{spanId:-}]){yellow} %clr({%X{scope:-}}){blue} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %mask(%m)%n%wEx"/>
+
+  <!-- ── Pattern PROD (sem cores, compacto) ────────────────────────── -->
+  <property name="OCOELHOGABRIEL_PROD_PATTERN"
+    value="%d{ISO8601} %5p [${appName:-},%X{traceId:-},%X{spanId:-}] {%X{scope:-}} %-40.40logger{39} : %mask(%m)%n%wEx"/>
+
+  <!-- ── Appender CONSOLE DEV (pronto para usar) ──────────────────── -->
+  <appender name="OCOELHOGABRIEL_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>${OCOELHOGABRIEL_DEV_PATTERN}</pattern>
+      <charset>UTF-8</charset>
+    </encoder>
+  </appender>
+
+</included>
