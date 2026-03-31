@@ -44,7 +44,7 @@ jobs:
           CURRENT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "Versão atual: $CURRENT_VERSION"
 
-          # Incremento SemVer
+          # Lógica SemVer
           IFS='.' read -ra ADDR <<< "${CURRENT_VERSION%-SNAPSHOT}"
           MAJOR=${ADDR[0]}
           MINOR=${ADDR[1]}
@@ -74,7 +74,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Cria a release oficial no GitHub com notas geradas automaticamente com base nos commits
+          # Cria a release oficial na interface do GitHub com changelog automático
           gh release create "v${{ env.NEW_VERSION }}" \
             --title "Release v${{ env.NEW_VERSION }}" \
             --generate-notes
@@ -82,4 +82,4 @@ jobs:
       - name: Summary
         run: |
           echo "## 🚀 Release v${{ env.NEW_VERSION }} criada com sucesso!" >> $GITHUB_STEP_SUMMARY
-          echo "A tag foi enviada e a GitHub Release foi gerada com o changelog automático." >> $GITHUB_STEP_SUMMARY
+          echo "A tag e a release oficial foram geradas." >> $GITHUB_STEP_SUMMARY
