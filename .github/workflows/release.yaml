@@ -66,20 +66,20 @@ jobs:
         run: |
           git add pom.xml
           git commit -m "chore: release version ${{ env.NEW_VERSION }}"
-          git tag -a "v${{ env.NEW_VERSION }}" -m "Release version ${{ env.NEW_VERSION }}"
+          git tag -a "${{ env.NEW_VERSION }}" -m "Release version ${{ env.NEW_VERSION }}"
           git push origin main
-          git push origin "v${{ env.NEW_VERSION }}"
+          git push origin "${{ env.NEW_VERSION }}"
 
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Cria a release oficial na interface do GitHub com changelog automático
-          gh release create "v${{ env.NEW_VERSION }}" \
-            --title "Release v${{ env.NEW_VERSION }}" \
+          gh release create "${{ env.NEW_VERSION }}" \
+            --title "Release ${{ env.NEW_VERSION }}" \
             --generate-notes
 
       - name: Summary
         run: |
-          echo "## 🚀 Release v${{ env.NEW_VERSION }} criada com sucesso!" >> $GITHUB_STEP_SUMMARY
+          echo "## 🚀 Release ${{ env.NEW_VERSION }} criada com sucesso!" >> $GITHUB_STEP_SUMMARY
           echo "A tag e a release oficial foram geradas." >> $GITHUB_STEP_SUMMARY
