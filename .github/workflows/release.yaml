@@ -40,11 +40,11 @@ jobs:
 
       - name: Calculate and Set New Version
         run: |
-          # Obtém a versão atual do pom.xml
+          # Obtém a versão atual definida no seu pom.xml (atualmente 1.0.0)
           CURRENT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "Versão atual: $CURRENT_VERSION"
 
-          # Lógica simples para incrementar a versão (SemVer)
+          # Lógica para incrementar a versão seguindo SemVer
           IFS='.' read -ra ADDR <<< "${CURRENT_VERSION%-SNAPSHOT}"
           MAJOR=${ADDR[0]}
           MINOR=${ADDR[1]}
@@ -59,6 +59,8 @@ jobs:
           fi
 
           echo "Nova versão: $NEW_VERSION"
+
+          # Atualiza o pom.xml com a nova versão calculada
           mvn versions:set -DnewVersion=$NEW_VERSION -DgenerateBackupPoms=false
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
