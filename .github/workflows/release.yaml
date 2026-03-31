@@ -40,11 +40,11 @@ jobs:
 
       - name: Calculate and Set New Version
         run: |
-          # Obtém a versão atual definida no seu pom.xml (atualmente 1.0.0)
+          # Obtém a versão atual do pom.xml (atualmente 1.0.0)
           CURRENT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "Versão atual: $CURRENT_VERSION"
 
-          # Lógica para incrementar a versão seguindo SemVer
+          # Incremento SemVer
           IFS='.' read -ra ADDR <<< "${CURRENT_VERSION%-SNAPSHOT}"
           MAJOR=${ADDR[0]}
           MINOR=${ADDR[1]}
@@ -59,8 +59,6 @@ jobs:
           fi
 
           echo "Nova versão: $NEW_VERSION"
-
-          # Atualiza o pom.xml com a nova versão calculada
           mvn versions:set -DnewVersion=$NEW_VERSION -DgenerateBackupPoms=false
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
@@ -72,7 +70,16 @@ jobs:
           git push origin main
           git push origin "v${{ env.NEW_VERSION }}"
 
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Cria a release oficial no GitHub com notas geradas automaticamente com base nos commits
+          gh release create "v${{ env.NEW_VERSION }}" \
+            --title "Release v${{ env.NEW_VERSION }}" \
+            --generate-notes
+
       - name: Summary
         run: |
           echo "## 🚀 Release v${{ env.NEW_VERSION }} criada com sucesso!" >> $GITHUB_STEP_SUMMARY
-          echo "A tag foi enviada e o JitPack iniciará o build automaticamente." >> $GITHUB_STEP_SUMMARY
+          echo "A tag foi enviada e a GitHub Release foi gerada com o changelog automático." >> $GITHUB_STEP_SUMMARY
