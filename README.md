@@ -1,5 +1,7 @@
-# 🔭 ocoelhogabriel-observability-spring-boot-starter
+# 🔭 Observability Spring Boot Starter
 
+[![CI](https://github.com/ocoelhogabriel/observability-starter/actions/workflows/publish.yml/badge.svg)](https://github.com/ocoelhogabriel/observability-starter/actions)
+[![JitPack](https://jitpack.io/v/ocoelhogabriel/observability-starter.svg)](https://jitpack.io/#ocoelhogabriel/observability-starter)
 [![Java](https://img.shields.io/badge/Java-21+-orange?logo=openjdk)](https://openjdk.org/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.x-brightgreen?logo=springboot)](https://spring.io/projects/spring-boot)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -29,23 +31,28 @@ Auto-detecção de método chamador via `StackWalker`, structured logging com fl
 
 ## 🚀 Quick Start
 
-### 1. Instalar no Maven Local
+### 1. Adicionar o repositório JitPack
 
-```bash
-git clone git@github.com:ocoelhogabriel/ocoelhogabriel-observability-starter.git
-cd ocoelhogabriel-observability-starter
-mvn clean install -DskipTests
+```xml
+<repositories>
+  <repository>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
+  </repository>
+</repositories>
 ```
 
 ### 2. Adicionar a dependência
 
 ```xml
 <dependency>
-  <groupId>br.com.ocoelhogabriel</groupId>
-  <artifactId>ocoelhogabriel-observability-spring-boot-starter</artifactId>
-  <version>1.0.0</version>
+  <groupId>com.github.ocoelhogabriel</groupId>
+  <artifactId>observability-starter</artifactId>
+  <version>v1.0.0</version>
 </dependency>
 ```
+
+> **Sem autenticação.** JitPack é público — qualquer pessoa pode usar a dependência.
 
 ### 3. Pronto! Use no código
 
@@ -134,8 +141,7 @@ No JSON de produção, cada campo aparece como atributo de primeiro nível:
   "outcome": "SUCCESS",
   "source": "API",
   "traceId": "a1b2c3d4e5f6g7h8",
-  "spanId": "1234abcd5678efgh",
-  "serviceName": "ms_iam"
+  "spanId": "1234abcd5678efgh"
 }
 ```
 
@@ -421,6 +427,48 @@ br.com.ocoelhogabriel.observability
   <artifactId>logstash-logback-encoder</artifactId>
   <version>8.0</version>
 </dependency>
+```
+
+---
+
+## 🔄 CI/CD
+
+O projeto usa **GitHub Actions** para build e testes automáticos.
+
+A publicação é feita automaticamente via **[JitPack](https://jitpack.io/#ocoelhogabriel/observability-starter)** — basta criar uma tag/release no GitHub e o JitPack compila e disponibiliza publicamente.
+
+### Publicar uma nova versão
+
+```bash
+# 1. Commit suas mudanças
+git add .
+git commit -m "feat: nova feature"
+git push origin main
+
+# 2. Crie a tag
+git tag v1.0.0
+git push --tags
+```
+
+A partir desse momento, qualquer pessoa pode usar `v1.0.0` como versão na dependência.
+
+---
+
+## 🛠️ Desenvolvimento Local
+
+```bash
+# Clonar
+git clone git@github.com:ocoelhogabriel/observability-starter.git
+cd observability-starter
+
+# Compilar
+mvn clean compile
+
+# Instalar localmente
+mvn clean install -DskipTests
+
+# Rodar testes
+mvn test
 ```
 
 ---

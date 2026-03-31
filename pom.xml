@@ -12,17 +12,25 @@
   </parent>
 
   <groupId>br.com.ocoelhogabriel</groupId>
-  <artifactId>ocoelhogabriel-observability-spring-boot-starter</artifactId>
+  <artifactId>observability-spring-boot-starter</artifactId>
   <version>1.0.0</version>
   <packaging>jar</packaging>
 
-  <name>Ocoelhogabriel Observability Starter</name>
+  <name>Observability Spring Boot Starter</name>
   <description>
-    Production-grade observability library for Ocoelhogabriel microservices.
+    Production-grade observability library for Spring Boot microservices.
     Provides structured logging with fluent API, correlation context propagation,
     automatic performance instrumentation, sensitive data masking, smart log sampling,
     audit trail, and Micrometer metrics integration.
   </description>
+
+  <url>https://github.com/ocoelhogabriel/observability-starter</url>
+
+  <scm>
+    <connection>scm:git:git://github.com/ocoelhogabriel/observability-starter.git</connection>
+    <developerConnection>scm:git:ssh://github.com:ocoelhogabriel/observability-starter.git</developerConnection>
+    <url>https://github.com/ocoelhogabriel/observability-starter</url>
+  </scm>
 
   <properties>
     <java.version>21</java.version>
