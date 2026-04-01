@@ -3,86 +3,121 @@
     {
       "name": "ocoelhogabriel.observability",
       "type": "br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties",
-      "description": "Configuration properties for Ocoelhogabriel Observability Starter."
+      "sourceType": "br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties"
+    },
+    {
+      "name": "ocoelhogabriel.observability.audit",
+      "type": "br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties$Audit",
+      "sourceType": "br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties",
+      "sourceMethod": "public br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties.Audit getAudit() "
+    },
+    {
+      "name": "ocoelhogabriel.observability.health",
+      "type": "br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties$Health",
+      "sourceType": "br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties",
+      "sourceMethod": "public br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties.Health getHealth() "
+    },
+    {
+      "name": "ocoelhogabriel.observability.masking",
+      "type": "br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties$Masking",
+      "sourceType": "br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties",
+      "sourceMethod": "public br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties.Masking getMasking() "
+    },
+    {
+      "name": "ocoelhogabriel.observability.metrics",
+      "type": "br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties$Metrics",
+      "sourceType": "br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties",
+      "sourceMethod": "public br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties.Metrics getMetrics() "
+    },
+    {
+      "name": "ocoelhogabriel.observability.request-logging",
+      "type": "br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties$RequestLogging",
+      "sourceType": "br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties",
+      "sourceMethod": "public br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties.RequestLogging getRequestLogging() "
+    },
+    {
+      "name": "ocoelhogabriel.observability.sampling",
+      "type": "br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties$Sampling",
+      "sourceType": "br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties",
+      "sourceMethod": "public br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties.Sampling getSampling() "
     }
   ],
   "properties": [
     {
-      "name": "ocoelhogabriel.observability.enabled",
-      "type": "java.lang.Boolean",
-      "description": "Enable or disable the entire observability starter.",
-      "defaultValue": true
-    },
-    {
-      "name": "ocoelhogabriel.observability.service-name",
-      "type": "java.lang.String",
-      "description": "Service name (auto-detected from spring.application.name if empty)."
-    },
-    {
-      "name": "ocoelhogabriel.observability.request-logging.enabled",
-      "type": "java.lang.Boolean",
-      "description": "Enable automatic HTTP request/response logging.",
-      "defaultValue": true
-    },
-    {
-      "name": "ocoelhogabriel.observability.request-logging.include-headers",
-      "type": "java.util.List<java.lang.String>",
-      "description": "HTTP headers to include in request logs.",
-      "defaultValue": ["Content-Type", "Accept", "User-Agent"]
-    },
-    {
-      "name": "ocoelhogabriel.observability.request-logging.log-body",
-      "type": "java.lang.Boolean",
-      "description": "Whether to log request/response bodies.",
-      "defaultValue": false
-    },
-    {
-      "name": "ocoelhogabriel.observability.masking.enabled",
-      "type": "java.lang.Boolean",
-      "description": "Enable sensitive data masking in log messages.",
-      "defaultValue": true
-    },
-    {
-      "name": "ocoelhogabriel.observability.masking.include-defaults",
-      "type": "java.lang.Boolean",
-      "description": "Include default masking patterns (CPF, CNPJ, email, etc.).",
-      "defaultValue": true
-    },
-    {
-      "name": "ocoelhogabriel.observability.sampling.enabled",
-      "type": "java.lang.Boolean",
-      "description": "Enable probabilistic log sampling for DEBUG/TRACE levels.",
-      "defaultValue": false
-    },
-    {
-      "name": "ocoelhogabriel.observability.sampling.debug-rate",
-      "type": "java.lang.Double",
-      "description": "Sampling rate for DEBUG logs (0.0 to 1.0).",
-      "defaultValue": 0.1
-    },
-    {
-      "name": "ocoelhogabriel.observability.sampling.trace-rate",
-      "type": "java.lang.Double",
-      "description": "Sampling rate for TRACE logs (0.0 to 1.0).",
-      "defaultValue": 0.01
-    },
-    {
       "name": "ocoelhogabriel.observability.audit.enabled",
       "type": "java.lang.Boolean",
-      "description": "Enable the structured audit logger.",
-      "defaultValue": true
+      "sourceType": "br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties$Audit"
     },
     {
-      "name": "ocoelhogabriel.observability.metrics.enabled",
+      "name": "ocoelhogabriel.observability.enabled",
       "type": "java.lang.Boolean",
-      "description": "Enable Micrometer metrics emission for log events.",
-      "defaultValue": true
+      "description": "Ativa ou desativa o starter inteiro. Default: true.",
+      "sourceType": "br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties"
     },
     {
       "name": "ocoelhogabriel.observability.health.enabled",
       "type": "java.lang.Boolean",
-      "description": "Enable logging pipeline health indicator in /actuator/health.",
-      "defaultValue": true
+      "sourceType": "br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties$Health"
+    },
+    {
+      "name": "ocoelhogabriel.observability.masking.enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties$Masking"
+    },
+    {
+      "name": "ocoelhogabriel.observability.masking.include-defaults",
+      "type": "java.lang.Boolean",
+      "sourceType": "br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties$Masking"
+    },
+    {
+      "name": "ocoelhogabriel.observability.masking.patterns",
+      "type": "java.util.List<br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties$PatternConfig>",
+      "sourceType": "br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties$Masking"
+    },
+    {
+      "name": "ocoelhogabriel.observability.metrics.enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties$Metrics"
+    },
+    {
+      "name": "ocoelhogabriel.observability.request-logging.enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties$RequestLogging"
+    },
+    {
+      "name": "ocoelhogabriel.observability.request-logging.include-headers",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties$RequestLogging"
+    },
+    {
+      "name": "ocoelhogabriel.observability.request-logging.log-body",
+      "type": "java.lang.Boolean",
+      "sourceType": "br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties$RequestLogging"
+    },
+    {
+      "name": "ocoelhogabriel.observability.sampling.debug-rate",
+      "type": "java.lang.Double",
+      "sourceType": "br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties$Sampling"
+    },
+    {
+      "name": "ocoelhogabriel.observability.sampling.enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties$Sampling"
+    },
+    {
+      "name": "ocoelhogabriel.observability.sampling.trace-rate",
+      "type": "java.lang.Double",
+      "sourceType": "br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties$Sampling"
+    },
+    {
+      "name": "ocoelhogabriel.observability.service-name",
+      "type": "java.lang.String",
+      "description": "Nome do serviço (auto-detectado via spring.application.name se vazio).",
+      "sourceType": "br.com.ocoelhogabriel.observability.autoconfigure.ObservabilityProperties"
     }
-  ]
+  ],
+  "hints": [],
+  "ignored": {
+    "properties": []
+  }
 }
