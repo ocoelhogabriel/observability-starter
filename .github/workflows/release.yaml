@@ -63,14 +63,21 @@ jobs:
         run: |
           git add pom.xml
           git commit -m "chore: release version ${{ env.NEW_VERSION }}"
-          git tag -a "v${{ env.NEW_VERSION }}" -m "Release version ${{ env.NEW_VERSION }}"
+
+          # Cria a tag sem o prefixo 'v'
+          git tag -a "${{ env.NEW_VERSION }}" -m "Release version ${{ env.NEW_VERSION }}"
+
+          # Sincroniza com o remoto para evitar o erro de non-fast-forward
+          git pull --rebase origin main
+
           git push origin main
-          git push origin "v${{ env.NEW_VERSION }}"
+          git push origin "${{ env.NEW_VERSION }}"
 
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create "v${{ env.NEW_VERSION }}" \
-            --title "Release v${{ env.NEW_VERSION }}" \
+          # Cria a release no GitHub sem o prefixo 'v'
+          gh release create "${{ env.NEW_VERSION }}" \
+            --title "Release ${{ env.NEW_VERSION }}" \
             --generate-notes
