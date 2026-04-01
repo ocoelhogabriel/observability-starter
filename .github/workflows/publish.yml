@@ -21,25 +21,17 @@ jobs:
       - name: Setup Java 21
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
-          distribution: 'temurin'
+          java-version: "21"
+          distribution: "temurin"
           cache: maven
 
       - name: Build & Run Tests
-        run: mvn clean verify -B
+        run: |
+          chmod +x mvnw
+          ./mvnw clean verify -B
 
       - name: Summary
         run: |
-          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "## ✅ Build successful" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Version:** \`$VERSION\`" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Install via JitPack" >> $GITHUB_STEP_SUMMARY
-          echo '```xml' >> $GITHUB_STEP_SUMMARY
-          echo '<dependency>' >> $GITHUB_STEP_SUMMARY
-          echo '  <groupId>com.github.ocoelhogabriel</groupId>' >> $GITHUB_STEP_SUMMARY
-          echo '  <artifactId>observability-starter</artifactId>' >> $GITHUB_STEP_SUMMARY
-          echo '  <version>TAG</version>' >> $GITHUB_STEP_SUMMARY
-          echo '</dependency>' >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY

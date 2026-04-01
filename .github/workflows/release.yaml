@@ -40,11 +40,9 @@ jobs:
 
       - name: Calculate and Set New Version
         run: |
-          # Obtém a versão atual do pom.xml (atualmente 1.0.0)
-          CURRENT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-          echo "Versão atual: $CURRENT_VERSION"
+          chmod +x mvnw
+          CURRENT_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout)
 
-          # Lógica SemVer
           IFS='.' read -ra ADDR <<< "${CURRENT_VERSION%-SNAPSHOT}"
           MAJOR=${ADDR[0]}
           MINOR=${ADDR[1]}
@@ -58,28 +56,21 @@ jobs:
             NEW_VERSION="$MAJOR.$MINOR.$((PATCH+1))"
           fi
 
-          echo "Nova versão: $NEW_VERSION"
-          mvn versions:set -DnewVersion=$NEW_VERSION -DgenerateBackupPoms=false
+          ./mvnw versions:set -DnewVersion=$NEW_VERSION -DgenerateBackupPoms=false
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
       - name: Commit and Tag
         run: |
           git add pom.xml
           git commit -m "chore: release version ${{ env.NEW_VERSION }}"
-          git tag -a "${{ env.NEW_VERSION }}" -m "Release version ${{ env.NEW_VERSION }}"
+          git tag -a "v${{ env.NEW_VERSION }}" -m "Release version ${{ env.NEW_VERSION }}"
           git push origin main
-          git push origin "${{ env.NEW_VERSION }}"
+          git push origin "v${{ env.NEW_VERSION }}"
 
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Cria a release oficial na interface do GitHub com changelog automático
-          gh release create "${{ env.NEW_VERSION }}" \
-            --title "Release ${{ env.NEW_VERSION }}" \
+          gh release create "v${{ env.NEW_VERSION }}" \
+            --title "Release v${{ env.NEW_VERSION }}" \
             --generate-notes
-
-      - name: Summary
-        run: |
-          echo "## 🚀 Release ${{ env.NEW_VERSION }} criada com sucesso!" >> $GITHUB_STEP_SUMMARY
-          echo "A tag e a release oficial foram geradas." >> $GITHUB_STEP_SUMMARY

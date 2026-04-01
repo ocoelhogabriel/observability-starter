@@ -2,4 +2,5 @@ jdk:
   - openjdk21
 
 install:
-  - mvn clean install -DskipTests -B
+  - chmod +x mvnw
+  - ./mvnw clean install -DskipTests -B
