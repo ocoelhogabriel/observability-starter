@@ -28,11 +28,11 @@
 
   <!-- ── Pattern DEV (colorido com contexto completo) ──────────────── -->
   <property name="OCOELHOGABRIEL_DEV_PATTERN"
-    value="%clr(%d{HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr([${appName:-},%X{traceId:-},%X{spanId:-}]){yellow} %clr({%X{scope:-}}){blue} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %mask(%m)%n%wEx"/>
+    value="%clr(%d{HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr([${appName:-},%X{traceId:-},%X{spanId:-}]){yellow} %clr({%X{scope:-}}){blue} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %mask(%msg)%n%wEx"/>
 
   <!-- ── Pattern PROD (sem cores, compacto) ────────────────────────── -->
   <property name="OCOELHOGABRIEL_PROD_PATTERN"
-    value="%d{ISO8601} %5p [${appName:-},%X{traceId:-},%X{spanId:-}] {%X{scope:-}} %-40.40logger{39} : %mask(%m)%n%wEx"/>
+    value="%d{ISO8601} %5p [${appName:-},%X{traceId:-},%X{spanId:-}] {%X{scope:-}} %-40.40logger{39} : %mask(%msg)%n%wEx"/>
 
   <!-- ── Appender CONSOLE DEV (pronto para usar) ──────────────────── -->
   <appender name="OCOELHOGABRIEL_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">

@@ -56,6 +56,10 @@ Auto-detecção de método chamador via `StackWalker`, structured logging com fl
 
 ### 3. Pronto! Use no código
 
+> **Zero configuração de Logback.**
+> A partir da versão 1.0.3, se o seu projeto não tiver `logback-spring.xml` nem `logback.xml`, a lib aplica automaticamente os patterns coloridos (DEV) ou compactos (PROD) via `ApplicationListener` — exatamente como o próprio Spring Boot faz internamente.
+> Se você já tiver um `logback-spring.xml` customizado, o comportamento não é alterado.
+
 ```java
 import br.com.ocoelhogabriel.observability.core.ObservableLogger;
 import br.com.ocoelhogabriel.observability.core.ObservableLoggerFactory;
@@ -312,7 +316,9 @@ Métricas expostas automaticamente em `/actuator/prometheus`:
 
 ## 📁 Logback Integration
 
-Inclua os defaults da lib no seu `logback-spring.xml`:
+> **A partir da v1.0.3, nenhuma configuração de Logback é necessária.**
+> Se não houver `logback-spring.xml` no projeto, a lib configura automaticamente o console com o pattern correto para o perfil ativo (`prod` ou dev).
+> O bloco abaixo é opcional e serve apenas para customizações avançadas (appenders extras, JSON para Loki/ELK, etc.).
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
