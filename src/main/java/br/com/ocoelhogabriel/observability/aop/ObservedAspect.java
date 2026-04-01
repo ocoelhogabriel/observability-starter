@@ -52,10 +52,12 @@ public class ObservedAspect {
 
     long startNanos = System.nanoTime();
     String outcome = "SUCCESS";
+    long durationNanos = 0;
 
     try {
       Object result = joinPoint.proceed();
-      long durationMs = (System.nanoTime() - startNanos) / 1_000_000;
+      durationNanos = System.nanoTime() - startNanos;
+      long durationMs = durationNanos / 1_000_000;
 
       // ── Log de saída ──────────────────────────────────────────
       if (observed.logResult() && result != null) {
@@ -69,7 +71,8 @@ public class ObservedAspect {
       return result;
 
     } catch (Throwable t) {
-      long durationMs = (System.nanoTime() - startNanos) / 1_000_000;
+      durationNanos = System.nanoTime() - startNanos;
+      long durationMs = durationNanos / 1_000_000;
       outcome = "ERROR";
 
       log.operation(operationName)
@@ -80,7 +83,7 @@ public class ObservedAspect {
 
       throw t;
     } finally {
-      long durationNanos = System.nanoTime() - startNanos;
+      // durationNanos já foi capturado no try ou no catch — o finally não remede o clock
       recordTimer(targetClass, methodName, operationName, outcome, durationNanos);
     }
   }

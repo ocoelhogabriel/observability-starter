@@ -131,8 +131,11 @@ public class ObservabilityAutoConfiguration {
   @ConditionalOnMissingBean(AuditLogger.class)
   @ConditionalOnProperty(prefix = "ocoelhogabriel.observability.audit", name = "enabled",
       havingValue = "true", matchIfMissing = true)
-  public AuditLogger auditLogger(DataMasker dataMasker) {
-    return new AuditLogger(resolveServiceName(), dataMasker);
+  public AuditLogger auditLogger(org.springframework.beans.factory.ObjectProvider<DataMasker> dataMaskerProvider) {
+    // ObjectProvider evita falha de startup quando masking está desabilitado
+    // (DataMasker não é criado se ocoelhogabriel.observability.masking.enabled=false)
+    DataMasker masker = dataMaskerProvider.getIfAvailable();
+    return new AuditLogger(resolveServiceName(), masker);
   }
 
   // ── Logging Health Indicator ──────────────────────────────────────

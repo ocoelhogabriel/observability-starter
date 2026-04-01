@@ -7,9 +7,7 @@
 
   Ele fornece:
   - Conversion rule para masking automático (%mask)
-  - Pattern padrão para DEV (colorido, com traceId/spanId/scope)
-  - Pattern padrão para PROD (compacto, sem cores)
-  - Appender CONSOLE pré-configurado
+  - Appender OCOELHOGABRIEL_CONSOLE pré-configurado (padrão DEV colorido)
 -->
 <included>
 
@@ -18,7 +16,7 @@
 
   <!-- Registra o converter de masking -->
   <conversionRule conversionWord="mask"
-    converterClass="br.com.ocoelhogabriel.observability.masking.MaskingMessageConverter"/>
+    class="br.com.ocoelhogabriel.observability.masking.MaskingMessageConverter"/>
 
   <!-- Propriedades injetadas do Spring -->
   <springProperty scope="context" name="appName"
@@ -26,18 +24,18 @@
   <springProperty scope="context" name="activeProfile"
     source="spring.profiles.active" defaultValue="default"/>
 
-  <!-- ── Pattern DEV (colorido com contexto completo) ──────────────── -->
-  <property name="OCOELHOGABRIEL_DEV_PATTERN"
-    value="%clr(%d{HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr([${appName:-},%X{traceId:-},%X{spanId:-}]){yellow} %clr({%X{scope:-}}){blue} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %mask(%msg)%n%wEx"/>
-
-  <!-- ── Pattern PROD (sem cores, compacto) ────────────────────────── -->
-  <property name="OCOELHOGABRIEL_PROD_PATTERN"
-    value="%d{ISO8601} %5p [${appName:-},%X{traceId:-},%X{spanId:-}] {%X{scope:-}} %-40.40logger{39} : %mask(%msg)%n%wEx"/>
-
   <!-- ── Appender CONSOLE DEV (pronto para usar) ──────────────────── -->
+  <!--
+    IMPORTANTE: %n NÃO pode ficar dentro de <property value="..."/>.
+    Quando o Logback expande a propriedade via ${VAR}, o %n já chega como
+    texto literal para o PatternLayoutEncoder e não é interpretado como
+    newline — resultado: todos os logs ficam na mesma linha.
+    O pattern deve ser declarado diretamente no <encoder> para que o
+    PatternLayout receba e resolva %n corretamente.
+  -->
   <appender name="OCOELHOGABRIEL_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
-      <pattern>${OCOELHOGABRIEL_DEV_PATTERN}</pattern>
+      <pattern>%clr(%d{HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr([${appName:-},%X{traceId:-},%X{spanId:-}]){yellow} %clr({%X{scope:-}}){blue} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %mask(%msg)%n%wEx</pattern>
       <charset>UTF-8</charset>
     </encoder>
   </appender>
