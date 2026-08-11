@@ -29,12 +29,10 @@ import org.slf4j.MDC;
 public final class LogEvent {
 
   private final ObservableLogger logger;
-  private final String operationName;
   private final Map<String, String> fields = new LinkedHashMap<>();
 
   LogEvent(ObservableLogger logger, String operationName) {
     this.logger = logger;
-    this.operationName = operationName;
     this.fields.put("operation", operationName);
   }
 

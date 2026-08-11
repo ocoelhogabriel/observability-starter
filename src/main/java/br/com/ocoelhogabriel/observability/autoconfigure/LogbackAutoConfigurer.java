@@ -6,6 +6,7 @@ import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.ConsoleAppender;
+import org.jspecify.annotations.*;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationEnvironmentPreparedEvent;
 import org.springframework.context.ApplicationListener;
@@ -45,7 +46,7 @@ public class LogbackAutoConfigurer
   }
 
   @Override
-  public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
+  public void onApplicationEvent(@NonNull ApplicationEnvironmentPreparedEvent event) {
     if (!(LoggerFactory.getILoggerFactory() instanceof LoggerContext context)) {
       return; // Não está usando Logback — ignora
     }

@@ -33,6 +33,6 @@ public final class ObservableLoggerFactory {
    * Obtém um logger pelo nome. Loggers são cacheados por nome.
    */
   public static ObservableLogger getLogger(String name) {
-    return CACHE.computeIfAbsent(name, n -> new ObservableLogger(n));
+    return CACHE.computeIfAbsent(name, ObservableLogger::new);
   }
 }

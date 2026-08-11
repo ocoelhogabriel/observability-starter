@@ -36,11 +36,9 @@ public class RequestLoggingFilter implements Filter {
   );
 
   private final List<String> includeHeaders;
-  private final boolean logBody;
 
   public RequestLoggingFilter(List<String> includeHeaders, boolean logBody) {
     this.includeHeaders = includeHeaders != null ? includeHeaders : List.of();
-    this.logBody = logBody;
   }
 
   @Override

@@ -1,5 +1,6 @@
 package br.com.ocoelhogabriel.observability.context;
 
+import org.jspecify.annotations.*;
 import org.springframework.core.task.TaskDecorator;
 
 /**
@@ -23,7 +24,7 @@ import org.springframework.core.task.TaskDecorator;
 public class ContextPropagator implements TaskDecorator {
 
   @Override
-  public Runnable decorate(Runnable runnable) {
+  public Runnable decorate(@NonNull Runnable runnable) {
     // Captura na thread chamadora
     CorrelationContext snapshot = CorrelationContextHolder.snapshot();
 

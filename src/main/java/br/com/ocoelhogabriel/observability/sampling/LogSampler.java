@@ -36,11 +36,11 @@ public class LogSampler extends TurboFilter {
   private double traceRate = 0.01;
 
   public void setDebugRate(double debugRate) {
-    this.debugRate = Math.max(0.0, Math.min(1.0, debugRate));
+    this.debugRate = Math.clamp(debugRate, 0.0, 1.0);
   }
 
   public void setTraceRate(double traceRate) {
-    this.traceRate = Math.max(0.0, Math.min(1.0, traceRate));
+    this.traceRate = Math.clamp(traceRate, 0.0, 1.0);
   }
 
   public double getDebugRate() {
